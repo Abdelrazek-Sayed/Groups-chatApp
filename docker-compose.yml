@@ -92,7 +92,7 @@ services:
         networks:
             - sail
     selenium:
-        image: selenium/standalone-chrome
+        image: seleniarm/standalone-chromium
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         volumes:
@@ -105,13 +105,15 @@ services:
         links:
             - mysql:mysql
         ports:
-            - 9000:80
-        networks:
-            - sail
+            - 9090:80
         environment:
             MYSQL_USERNAME: "${DB_USERNAME}"
             MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
             PMA_HOST: mysql
+        networks:
+            - sail
+        depends_on:
+            - mysql
 networks:
     sail:
         driver: bridge
